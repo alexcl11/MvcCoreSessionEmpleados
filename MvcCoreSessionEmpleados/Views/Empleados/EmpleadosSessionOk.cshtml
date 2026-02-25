@@ -1,0 +1,40 @@
+﻿@model List<Empleado>
+
+<h1>Almacenar Empleados Session OK</h1>
+<br />
+<hr />
+<br />
+<p>
+    <a asp-controller="Empleados" asp-action="EmpleadosAlmacenadosOk">
+        Empleados Almacenados OK
+    </a>
+</p>
+
+@if (Model != null)
+{
+    <table class="table table-bordered">
+        <thead>
+        <th>Apellido</th>
+        <th>Oficio</th>
+        <th>Salario</th>
+        <th></th>
+        </thead>
+        <tbody>
+            @foreach (Empleado empleado in Model)
+            {
+                <tr>
+                    <td>@empleado.Apellido</td>
+                    <td>@empleado.Oficio</td>
+                    <td>@empleado.Salario</td>
+                    <td>
+                        <a asp-controller="Empleados"
+                           asp-action="EmpleadosSessionOk"
+                           asp-route-idEmpleado="@empleado.IdEmpleado" class="btn btn-primary">
+                            Almacenar Empleado
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

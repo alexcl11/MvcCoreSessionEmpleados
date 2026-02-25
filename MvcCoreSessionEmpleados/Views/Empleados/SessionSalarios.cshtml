@@ -1,0 +1,43 @@
+﻿@model List<Empleado>
+
+<h1>Empleados</h1>
+
+<br />
+<hr />
+<br />
+<p>
+    <a asp-controller="Empleados" asp-action="SumaSalarial" >
+        Mostrar suma salarial
+    </a>
+</p>
+
+<h4>@ViewData["MENSAJE"]</h4>
+
+@if (Model != null)
+{
+    <table class="table table-bordered">
+        <thead>
+            <th>Apellido</th>
+            <th>Oficio</th>
+            <th>Salario</th>
+            <th></th>
+        </thead>
+        <tbody>
+            @foreach (Empleado empleado in Model)
+            {
+                <tr>
+                    <td>@empleado.Apellido</td>
+                    <td>@empleado.Oficio</td>
+                    <td>@empleado.Salario</td>
+                    <td>
+                        <a asp-controller="Empleados" 
+                        asp-action="SessionSalarios" 
+                        asp-route-salario="@empleado.Salario" class="btn btn-primary">
+                            Almacenar salario
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
