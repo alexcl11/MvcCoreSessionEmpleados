@@ -1,0 +1,47 @@
+﻿@model List<Empleado>
+
+<h1>Empleados Almacenados Session V5</h1>
+
+<p>
+    <a asp-controller="Empleados" asp-action="SessionEmpleadosV5">Volver a empleados V5</a>
+</p>
+
+
+@if (Context.Session.GetString("IDSEMPLEADOS") != null)
+{
+    @if (Model != null)
+    {
+        <table class="table table-bordered">
+            <thead>
+            <th>Id Empleado</th>
+            <th>Apellido</th>
+            <th>Oficio</th>
+            <th>Salario</th>
+            <th>Id Departamento</th>
+            <th></th>
+            </thead>
+            <tbody>
+                @foreach (Empleado empleado in Model)
+                {
+                    <tr>
+                        <td>@empleado.IdEmpleado</td>
+                        <td>@empleado.Apellido</td>
+                        <td>@empleado.Oficio</td>
+                        <td>@empleado.Salario</td>
+                        <td>@empleado.IdDepartamento</td>
+                        <td>
+                            <a asp-controller="Empleados" asp-action="EmpleadosAlmacenadosV5" 
+                            asp-route-ideliminar="@empleado.IdEmpleado" class="btn btn-danger">
+                                Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <h2>No tiene empleados almacenados en Session</h2>
+}

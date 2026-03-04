@@ -1,0 +1,86 @@
+﻿@model List<Empleado>
+@{
+    // NECESITAMOS SESSION PARA COMPROBAR SUS DATOS
+    List<int> ids = Context.Session.GetObject<List<int>>("IDSEMPLEADOS");
+}
+<h1>Almacenar Empleados Session V5</h1>
+<br />
+<hr />
+<br />
+<p>
+    <a asp-controller="Empleados" asp-action="EmpleadosAlmacenadosV5">
+        Empleados Almacenados V5
+    </a>
+</p>
+
+<p>
+    <a asp-controller="Empleados" asp-action="EmpleadosFavoritos">
+        Empleados Favoritos
+    </a>
+</p>
+
+@if (ids != null)
+{
+    <h3>
+        Empleados en session: @ids.Count()
+    </h3>    
+} else
+{
+    <h3>
+        Empleados en session: 0 pringao
+    </h3>
+}
+
+@if (Model != null)
+{
+    <table class="table table-bordered">
+        <thead>
+        <th>Apellido</th>
+        <th>Oficio</th>
+        <th>Salario</th>
+        <th></th>
+        </thead>
+        <tbody>
+            @foreach (Empleado empleado in Model)
+            {
+                <tr>
+                    <td>@empleado.Apellido</td>
+                    <td>@empleado.Oficio</td>
+                    <td>@empleado.Salario</td>
+                    <td>
+                        <a asp-controller="Empleados"
+                           asp-action="SessionEmpleadosV5"
+                           asp-route-idFavorito="@empleado.IdEmpleado" class="btn btn-success">
+                            Favorito
+                        </a>
+                        @if(ids == null)
+                        {
+                            //NO TENEMOS SESSION
+                            <a asp-controller="Empleados"
+                               asp-action="SessionEmpleadosV5"
+                               asp-route-idEmpleado="@empleado.IdEmpleado" class="btn btn-primary">
+                                Almacenar Empleado
+                            </a>
+                        }
+                        else
+                        {
+                            // BUSCAMOS SI EL EMPLEADO QUE ESTAMOS RECORRIENDO ESTA EN LA LISTA
+                            if (ids.Contains(empleado.IdEmpleado))
+                            {
+                                <img src="~/images/imagen.png" style="width: 50px; height: auto"/>
+                            }
+                            else
+                            {
+                                <a asp-controller="Empleados"
+                                   asp-action="SessionEmpleadosV5"
+                                   asp-route-idEmpleado="@empleado.IdEmpleado" class="btn btn-primary">
+                                    Almacenar Empleado
+                                </a>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
